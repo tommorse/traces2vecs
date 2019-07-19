@@ -1,0 +1,22 @@
+num_of_traces=3 // change this to be one more than X when traceX.dat
+                // has largest X value in your folder
+
+objref x_vec[num_of_traces], y_vec[num_of_traces]
+for i=0, num_of_traces-1 {
+  x_vec[i] = new Vector()
+  y_vec[i] = new Vector()
+}
+strdef tmpstr
+for i=0, num_of_traces-1 {
+  sprint(tmpstr,"trace%d.dat",i)
+  clipboard_retrieve(tmpstr)
+  y_vec[i] = hoc_obj_[0]
+  x_vec[i] = hoc_obj_[1]
+}
+objref g
+g = new Graph()
+for i=0, num_of_traces-1 {
+y_vec[i].line(g, x_vec[i], i%7+1, 1)
+}
+g.exec_menu("View = plot")
+
