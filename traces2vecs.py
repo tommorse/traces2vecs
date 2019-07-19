@@ -73,10 +73,10 @@ import sys
 import numpy as np
 input_ps_name = ""
 if (len(sys.argv)!=2):
-  print "I notice no inkscape output file was supplied as an argument - I will look later for one..."
+  print("I notice no inkscape output file was supplied as an argument - I will look later for one...")
 else:
   input_ps_name = sys.argv[1]
-  print input_ps_name
+  print(input_ps_name)
   #
   # read in the values from the axis limits file
   print("Opening "+input_ps_name +" for finding your manually entered")
@@ -120,13 +120,13 @@ if (len(sys.argv)>1):
     print("This file needs to be in the current directory/specified path")
     exit(1)
 else:
-  print "No inkscape file supplied as input."
-  print "I am going to look for an inkscape file"
+  print("No inkscape file supplied as input.")
+  print("I am going to look for an inkscape file")
   files=os.listdir(".")
   for f in files:
     if (f[-3:]=='.ps'):
       try:
-        print "*** Found one!: Using "+f+" as inkscape file (to read)."
+        print("*** Found one!: Using "+f+" as inkscape file (to read).")
         fid=open(f,"r")
         found_inkscape_file=-1
       except:
@@ -140,9 +140,12 @@ if (~found_inkscape_file):
 start_position=0
 file_data=fid.readlines()
 line_starts=[] # a list of the indicies that lines start in the supplied file
+initialized = False #
 for i in range(len(file_data)):
   # print "Checking: "+file_data[i]
-  if " cm" in file_data[i]: # 20180226 I noticed that lines start after " cm"
+  if " cm" in file_data[i] and ((" M " in file_data[i]) or (initialized)): # 20180226 I noticed that lines start after " cm"
+    # and that also have an " M " in it for the first one
+    initialized = True
     # print "found an MLine at line "+str(i)
     start_position=i+1
     line_starts.append(start_position)
@@ -204,10 +207,10 @@ if (axes_num_of_clicks==3):
   # now have the pixel values for the top y, origin, left x axes so
   # need to combine them with the read-in figure scale values 
   #
-  print "Using your inkscape 'first three clicks' line for the axis values:\n"
-  print "yaxis max: ",yaxis_xvec, ", ", yaxis_yvec
-  print "origin:    ",origin_xvec, ", ", origin_yvec
-  print "xaxis max: ",xaxis_xvec, ", ", xaxis_yvec
+  print("Using your inkscape 'first three clicks' line for the axis values:\n")
+  print("yaxis max: ",yaxis_xvec, ", ", yaxis_yvec)
+  print("origin:    ",origin_xvec, ", ", origin_yvec)
+  print("xaxis max: ",xaxis_xvec, ", ", xaxis_yvec)
   #x_fig = ((x_axis_max_x-x_axis_min_x)/(x_axis_pix_max - x_axis_pix_origin))*(x_pix - x_axis_pix_origin)
   #y_fig = ((y_axis_max_y-y_axis_min_y)/(y_axis_pix_max - y_axis_pix_origin))*(y_pix - y_axis_pix_origin)
   
@@ -227,10 +230,10 @@ elif (axes_num_of_clicks==4):
   # now have the pixel values for the top y, origin, left x axes so
   # need to combine them with the read-in figure scale values 
   #
-  print "Using your inkscape 'first four clicks' line for the axis values:\n"
-  print "yaxis max: ",yaxis_xvec, ", ", yaxis_yvec
-  print "xaxis min, yaxis_min:    ",origin_xvec, ", ", origin_yvec
-  print "xaxis max: ",xaxis_xvec, ", ", xaxis_yvec
+  print("Using your inkscape 'first four clicks' line for the axis values:\n")
+  print("yaxis max: ",yaxis_xvec, ", ", yaxis_yvec)
+  print("xaxis min, yaxis_min:    ",origin_xvec, ", ", origin_yvec)
+  print("xaxis max: ",xaxis_xvec, ", ", xaxis_yvec)
   #x_fig = ((x_axis_max_x-x_axis_min_x)/(x_axis_pix_max - x_axis_pix_origin))*(x_pix - x_axis_pix_origin)
   #y_fig = ((y_axis_max_y-y_axis_min_y)/(y_axis_pix_max - y_axis_pix_origin))*(y_pix - y_axis_pix_origin)
   
@@ -240,9 +243,9 @@ elif (axes_num_of_clicks==4):
   y_axis_pix_max = yaxis_yvec
   y_axis_pix_origin = origin_yvec  # actually min yvalue
 else:
-  print "I am confused by your first line being "+str(axes_num_of_clicks)
-  print "Please either click on three or four points to enter axes."
-  print "See documentation for more help."
+  print("I am confused by your first line being "+str(axes_num_of_clicks))
+  print("Please either click on three or four points to enter axes.")
+  print("See documentation for more help.")
   exit(1)
 
 def x_pix2x_fig(x_pix):
@@ -255,16 +258,16 @@ def y_pix2y_fig(y_pix):
   return (float(y_axis_max_y-y_axis_min_y)/(y_axis_pix_max - y_axis_pix_origin))*(y_pix - y_axis_pix_origin)+y_axis_min_y
 
 if (axes_num_of_clicks==3):
-  print "confirmation run of conversions x_pix2xfig, y_pix2y_fig:"
-  print "upper y axis: "+str(x_pix2x_fig(yaxis_xvec))+", "+str(y_pix2y_fig(yaxis_yvec))
-  print "graph origin: "+str(x_pix2x_fig(origin_xvec))+", "+str(y_pix2y_fig(origin_yvec))
-  print "right x axis: "+str(x_pix2x_fig(xaxis_xvec))+", "+str(y_pix2y_fig(xaxis_yvec))
+  print("confirmation run of conversions x_pix2xfig, y_pix2y_fig:")
+  print("upper y axis: "+str(x_pix2x_fig(yaxis_xvec))+", "+str(y_pix2y_fig(yaxis_yvec)))
+  print("graph origin: "+str(x_pix2x_fig(origin_xvec))+", "+str(y_pix2y_fig(origin_yvec)))
+  print("right x axis: "+str(x_pix2x_fig(xaxis_xvec))+", "+str(y_pix2y_fig(xaxis_yvec)))
 else:
-  print "confirmation run of conversions x_pix2xfig, y_pix2y_fig:"
-  print "upper y axis: "+str(x_pix2x_fig(yaxis_xvec))+", "+str(y_pix2y_fig(yaxis_yvec))
-  print "lower y axis: "+str(x_pix2x_fig(ignore_xvec))+", "+str(y_pix2y_fig(origin_yvec))
-  print "left x axis: "+str(x_pix2x_fig(origin_xvec))+", "+str(y_pix2y_fig(ignore_yvec))
-  print "right x axis: "+str(x_pix2x_fig(xaxis_xvec))+", "+str(y_pix2y_fig(xaxis_yvec))
+  print("confirmation run of conversions x_pix2xfig, y_pix2y_fig:")
+  print("upper y axis: "+str(x_pix2x_fig(yaxis_xvec))+", "+str(y_pix2y_fig(yaxis_yvec)))
+  print("lower y axis: "+str(x_pix2x_fig(ignore_xvec))+", "+str(y_pix2y_fig(origin_yvec)))
+  print("left x axis: "+str(x_pix2x_fig(origin_xvec))+", "+str(y_pix2y_fig(ignore_yvec)))
+  print("right x axis: "+str(x_pix2x_fig(xaxis_xvec))+", "+str(y_pix2y_fig(xaxis_yvec)))
 
 for X in range(len(traces)): # iterate over the number of traces
   filename="trace"+repr(X)+".dat"
