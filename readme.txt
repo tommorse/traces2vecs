@@ -46,7 +46,10 @@ of the y-axis, then the bottom of the y axis.
 If the bottom of the y axis (frequently the origin) is the same as the
 left most part of the x axis, then left click on the right most point
 on the x axis.  Then right click to finish writing the path (right
-click does not add a point).
+click does not add a point). Note that if you are clicking on scale
+bars that look like a backwards L then just enter a negative number
+for the last number in axis_limits.dat, or a number that is less than
+the first x axis number (the min and max x's are permuted; see below).
 
 6) Add all the traces: Add each line (sometimes called a trace) from
 the graph by repeating this method:
