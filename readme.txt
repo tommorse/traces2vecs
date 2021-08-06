@@ -41,7 +41,9 @@ scale bars, in which case you can make up the absolute values of the
 scale bar ends (when you create the axis_limits.dat file later - see
 below), however the relative difference between the scale bar ends
 needs to be the value reported for the figure.  Left click on the top
-of the y-axis, then the bottom of the y axis.
+of the y-axis, then the bottom of the y axis. If there is an x-axis
+left click on the minimum and then the maximum points (that have known
+values, such as on tic marks). Finish with a right click (anywhere).
 
 If the bottom of the y axis (frequently the origin) is the same as the
 left most part of the x axis, then left click on the right most point
