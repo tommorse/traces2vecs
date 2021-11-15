@@ -20,3 +20,60 @@ y_vec[i].line(g, x_vec[i], i%7+1, 1)
 }
 g.exec_menu("View = plot")
 
+///////////////////////////
+//
+// Interpolation section
+//
+///////////////////////////
+
+// create interpolated (inter) vectors with default delta_x 0.025
+// because fairly often time in ms is on the x coordinate
+
+delta_x = 0.025
+
+objref x_inter, y_inter[num_of_traces] // x_inter (interpolation x values) will
+// be common to all the y_inter[] vectors
+
+objref last_xs // the last x's in all the traces. Used to find the end
+// value for the interpolated x values
+objref first_xs // the first x's in all the traces. Used to find the start
+// value for the interpolated x values
+
+last_xs = new Vector()
+first_xs = new Vector()
+
+// ignore the 0th trace for these purposes which is the axis or scale bars trace
+for i = 1, num_of_traces-1 {
+  first_xs.append(x_vec[i].x[0])
+  last_xs.append(x_vec[i].x[x_vec[i].size()-1])
+}
+
+// create common x_vector to interpolate too
+min_x = first_xs.min()
+max_x = last_xs.max()
+// print "interpolated y from x = ", min_x, " to ", max_x
+
+x_inter = new Vector()
+x_inter.indgen(min_x, max_x, delta_x) // this creates the common x values
+
+// now assign the interpolated y values corresponding to these x values
+
+for i = 1, num_of_traces - 1 {
+  y_inter[i] = new Vector()
+  y_inter[i].interpolate(x_inter, x_vec[i], y_vec[i])
+}
+
+// save all these interpolated vectors
+objref fobj // file object
+strdef filename
+objref fobj
+fobj = new File()
+
+for i=1 , num_of_traces - 1 {
+  sprint(filename, "interp_trace_%d.dat", i)
+  fobj.wopen(filename)
+  for j = 0, x_inter.size()-1 {
+    fobj.printf("%20.10g\t%20.10g\n", x_inter.x[j], y_inter[i].x[j])
+  }
+  fobj.close()
+}
