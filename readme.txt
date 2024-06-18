@@ -74,7 +74,7 @@ that the points you clicked on the axes or scale bars of the graph
 represented.
 
 10) Run
-traces2vec.ps yourfilename.ps
+traces2vec.py yourfilename.ps
 
 11) Examine the traces created, traceX.dat.
 You can delete the first two lines of these files and use them in
