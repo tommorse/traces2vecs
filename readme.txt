@@ -28,9 +28,9 @@ control key down while using the scrool bar to zoom the drawing so
 that it is as big as possible on your screen to increase the accuracy
 of the pixels reported from your clicks on the image.
 
-4) select "Bezier and straight line path". (In my version of inkscape,
-in the left hand toolbar it is the 11th tool down from the top and the
-9th tool up from the bottom).
+4) select "Pen Tool Draw Bezier curves and straight lines (B)". (In 
+version 1.4 of inkscape, in the left hand toolbar it is the 9th tool
+down from the top and the 16th tool up from the bottom).
 
 5) Calibrate by clicking on the axes of the graph:
 
